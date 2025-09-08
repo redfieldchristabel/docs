@@ -7,7 +7,7 @@ sidebarTitle: Data Handling
 ## Introduction
 
 This section defines how data must be classified and handled across CARA COM MY systems.  
-The goal is to ensure that sensitive data is stored, transmitted, and accessed appropriately to reduce the risk of leaks or misuse.
+The goal is to ensure that sensitive data is stored, transmitted, and accessed appropriately to reduce the risk of leaks or misuse. 
 
 <CardGroup cols={2}>
   <Card title="Public" icon="unlock" iconType="solid" color="#eeea13ff">
@@ -35,64 +35,94 @@ The goal is to ensure that sensitive data is stored, transmitted, and accessed a
 
 ## Applying Data Classification in Practice
 
-### File Storage & Collaboration Tools
+Here’s how to apply these classifications in your daily work.
 
-This section applies to general document storage and collaboration.
+### 📂 File Storage & Collaboration
 
-- **Google Drive:** The company's Google Drive is the primary tool for storing **Public**, **Internal**, **Confidential**, and **Restricted** files. The owner of the file is responsible for configuring the access control based on the classification level:
-    - **Public:** Files can be shared publicly ("anyone with the link").
-    - **Internal:** Files must be shared only with members of the organization.
-    - **Confidential:** Files must be shared only with specific individuals or groups within the organization.
-    - **Restricted:** Files must be shared only with explicitly authorized individuals. Link sharing must be disabled.
-- **ClickUp:** Used for task management. Documents related to tasks should be stored in Google Drive and linked from ClickUp.
+<CardGroup>
+    <Card title="Google Drive">
+        - **Public:** Share publicly ("anyone with the link").
+        - **Internal:** Share only with members of the organization.
+        - **Confidential:** Share only with specific individuals or groups.
+        - **Restricted:** Share only with explicitly authorized individuals. Link sharing must be disabled.
+    </Card>
+    <Card title="ClickUp">
+        - Used for task management. 
+        - Link to documents in Google Drive instead of storing them directly in ClickUp.
+    </Card>
+</CardGroup>
 
 <Note>
   **Exception for Internal Systems:** If an internal system (e.g., CARA HRMS) has its own secure storage for restricted files, it is not necessary to duplicate those files in Google Drive.
 </Note>
 
-### Version Control (GitLab)
+### 💾 Version Control (GitLab)
 
-- **Internal** → code repos without sensitive data.
-- **Confidential** → private repos containing business logic or customer-related code.
-- **Restricted** → credentials, tokens, or secrets must **never** be committed to Git.
+<Card title="GitLab Repositories" icon="gitlab" iconType="brands">
+    - **Internal** → Code repos without sensitive data.
+    - **Confidential** → Private repos containing business logic or customer-related code.
+    - **Restricted** → Credentials, tokens, or secrets must **never** be committed to Git. 🤫
+</Card>
 
-### Databases & Applications
+### 🗄️ Databases & Applications
 
-- Label sensitive tables/columns by classification.
-- **Confidential** (e.g., user emails) may be accessible to project teams.
-- **Restricted** (e.g., password hashes, private keys) only accessible by MIS/IT Security or designated admins.
+<Card title="Databases and Applications" icon="database" iconType="solid">
+    - Label sensitive tables/columns by classification.
+    - **Confidential** (e.g., user emails) may be accessible to project teams.
+    - **Restricted** (e.g., password hashes, private keys) only accessible by MIS/IT Security or designated admins.
+</Card>
 
-### Data Transmission
+### 🚀 Data Transmission
 
-- **Internal Communication:** Normal email (e.g., Gmail) and approved chat tools are acceptable for transmitting **Internal** data.
-- **Secure Channels for Sensitive Data:** When transmitting **Confidential** or **Restricted** data, secure and encrypted channels must be used. This applies to:
-    - **Email:** Use PGP/S/MIME encryption for emails containing sensitive data.
-    - **API Calls:**
-        - **Public-facing APIs:** All public-facing API endpoints must enforce HTTPS.
-        - **Internal APIs:** Internal API calls between microservices can use HTTP, provided they are within a trusted network.
-    - **Other Transmissions:** Any other form of data transmission must use a secure protocol (e.g., SFTP).
+When sending data, use the right channels to keep it safe.
+
+<Steps>
+    <Step title="Internal Communication">
+        - Normal email (e.g., Gmail) and approved chat tools are acceptable for transmitting **Internal** data.
+    </Step>
+    <Step title="Secure Channels for Sensitive Data">
+        When transmitting **Confidential** or **Restricted** data, secure and encrypted channels must be used.
+        - **Email:** Use PGP/S/MIME encryption.
+        - **APIs:**
+            - **Public-facing APIs:** Must enforce HTTPS.
+            - **Internal APIs:** Can use HTTP within a trusted network.
+        - **Other Transmissions:** Use a secure protocol (e.g., SFTP).
+    </Step>
+</Steps>
 
 <Info>
   If you are unsure which protocol to use for your specific use case, please contact the MIS team for guidance.
 </Info>
 
-### Backups & Logs
+### 📦 Backups & Logs
 
+<Card title="Backups and Logs" icon="archive" iconType="solid">
 - **Confidential/Restricted** → backups must be encrypted, with access limited.
 - Use platform-level encryption where available (e.g., VMWare vSphere VM Encryption, or BitLocker for Hyper-V hosts) to protect backup files at rest.
 - Logs must mask Restricted fields (e.g., do not log raw passwords, tokens, or keys).
+</Card>
 
-### Access Rights
+### 🔑 Access Rights
 
+<Card title="Access Rights" icon="key" iconType="solid">
 - **Public/Internal** → accessible to most employees.
 - **Confidential** → limited to teams who need the information.
 - **Restricted** → only MIS/IT Security or explicitly authorized administrators.
+</Card>
 
-### Retention & Disposal
+### 🗑️ Retention & Disposal
 
+<Card title="Retention & Disposal" icon="trash" iconType="solid">
 - **Internal** → retain until no longer useful.
 - **Confidential** → retain as per business or client contract requirements.
 - **Restricted** → securely delete immediately once no longer required.
+</Card>
+
+## Summary
+
+- **Classify your data:** Understand the difference between Public, Internal, Confidential, and Restricted data.
+- **Handle with care:** Use the right tools and channels for storing and transmitting data.
+- **When in doubt, ask:** Contact the MIS team if you're unsure about how to handle specific data.
 
 <Warning>
   Data classification is not optional. All employees are expected to apply the
