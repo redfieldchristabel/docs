@@ -1,0 +1,98 @@
+---
+title: Authentication & Access Practices
+description: Standards for managing passwords, keys, and access to company systems
+sidebarTitle: Auth & Access
+---
+
+## Introduction
+
+This section defines the practices for handling passwords, keys, and access credentials across CARA COM MY systems.  
+It covers shared services such as GitLab, servers, databases, and automation tools.
+
+<Warning>
+  It does **not** apply to personal or company-issued laptops, email accounts,
+  or end-user device logins.
+</Warning>
+
+## GitLab Account Security
+
+<Note>
+  Applies to: All *developers* and *administrators* with GitLab access
+</Note>
+
+- All GitLab accounts (old and new instances) must be protected with **multi-factor authentication (MFA)**.
+- Personal access tokens must not be shared between users.
+
+## Server Access Security
+
+<Note>
+  Applies to: *Server Administrators* and *Developers* with server access
+</Note>
+
+- **No root login with password** is allowed.
+- Each server must have a **unique, randomly generated password** (if password authentication is enabled).
+- The same default password must not be reused across servers.
+- The default username may remain `cara`, but the password must be unique.
+- All developers must use **SSH public key authentication** for server access.
+- Each developer is assigned their own user account — no shared accounts allowed.
+
+## Service & Instance Access Security
+
+<Note>
+  Applies to: Any service instance (e.g., MySQL, Redis, PostgreSQL,
+  Elasticsearch, etc.)
+</Note>
+
+- Default or generic credentials (e.g., `root`, `admin/admin`, empty passwords) must not be used.
+- Each instance must have a unique password, different from other services.
+- Application services cannot connect to instances using a `root` or `admin` account.
+- When new credentials are created, they must be sent securely to the MIS/IT Security team:
+
+  - Save the credentials in a `.txt` file (structure is flexible but should be easy to read).
+  - Encrypt the file using the company-provided encryption tool:
+
+        - The tool already has the MIS public key hardcoded.
+        - Usage example:
+
+          <Tabs>
+
+            <Tab title="Linux or macOS">
+
+              You can encrypted using the provided tool from MIS team like bellow:
+              ```bash HelloWorld.sh
+                curl -sL https://company.com/encrypt_credentials.sh | bash -s credentials.txt
+              ```
+
+            </Tab>
+
+            <Tab title="Windows">
+
+              You can encrypted using the provided tool from MIS team like bellow:
+              ```powershell HelloWorld.exe
+                iwr https://company.com/encrypt_credentials.ps1 -UseBasicParsing | iex -ArgumentList 'credentials.txt'
+              ```
+
+            </Tab>
+
+          </Tabs>
+
+- Send the encrypted file via email to the MIS team.
+- The MIS team will decrypt the file using their private key.
+
+<Info>
+  If the process is not followed correctly, MIS may request the credentials to
+  be resent.
+</Info>
+
+## Service-to-Service Authentication
+
+<Note>Applies to: Servers, CI/CD pipelines, and automation tools</Note>
+
+- For accessing Git repositories, image registries, or package registries from servers or automation systems:
+  - Use **deploy keys**.
+  - Do **not** use personal access tokens for server deployments or automated workflows.
+
+## Summary
+
+This section ensures that passwords and keys are handled securely across GitLab, servers, service instances, and automation systems.  
+Following these practices protects our systems against credential theft and unauthorized access.
