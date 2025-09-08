@@ -14,7 +14,8 @@
       "scope",
       "auth_n_access",
       "acceptable_use",
-      "data_handling"
+      "data_handling",
+      "access_control"
     ]
   },
   "logo": {
