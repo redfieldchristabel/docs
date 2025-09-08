@@ -1,0 +1,73 @@
+---
+title: 'Network Security'
+description: 'This policy defines the requirements for securing our network infrastructure.'
+sidebarTitle: 'Network Security'
+---
+
+## Introduction
+
+This policy outlines the requirements for securing our company's network infrastructure to protect against unauthorized access and other threats.
+
+<Note>
+  This policy applies to all network infrastructure, including on-premise and cloud environments.
+</Note>
+
+## Core Principles
+
+### Firewalls
+
+- All servers and network segments must be protected by firewalls. Given that Ubuntu is our standard operating system, `UFW` (Uncomplicated Firewall) must be used.
+- Firewalls are to be provisioned exclusively by the IT Security team.
+- The default firewall policy is to **block all incoming traffic** and **allow all outgoing traffic**.
+- To open a specific port for inbound traffic, a formal request must be submitted via email to `mis@cara.com.my`. The request must include a clear business justification.
+- Firewall rules must be regularly reviewed and updated to ensure they are still relevant and effective.
+
+<Warning>
+  **Docker UFW Bypass:** Docker's default behavior of manipulating iptables to bypass UFW is strictly prohibited. All Docker container ports must be exposed through the host firewall and be subject to the same rules and request process.
+
+  **Tunneling Tool Bypass:** Using network tunneling tools (such as Twingate) to bypass firewall rules is strictly prohibited unless explicitly approved as part of a formal request.
+</Warning>
+
+### Intrusion Detection/Prevention Systems (IDS/IPS)
+
+- An IDS/IPS solution must be deployed to monitor for and block malicious network traffic in real-time.
+<Info>
+  To prevent resource contention on production servers, the IDS/IPS must be deployed on dedicated firewall hardware rather than on the servers themselves.
+</Info>
+- While a standard tool has not yet been selected, examples of potential open-source solutions include `Snort`, `Suricata`, or `Zeek`. The final selection and implementation will be managed by the IT Security team.
+
+### Wireless Security
+
+- All internal wireless networks must be encrypted using WPA2/3.
+- Guest wireless networks must be provided for visitors and personal devices, and must be completely segregated from the corporate network.
+
+### Remote Access Security
+
+- All remote access to the corporate network, including the DMZ, must be through an approved network tunneling solution (e.g., VPN, Twingate).
+- Each user must have their own unique account for remote access. The sharing of profiles or credentials is strictly prohibited.
+
+## Network Segmentation
+
+Our network is segmented into the following core networks to control access and contain threats. Segmentation must be enforced through physical isolation or VLANs. Logical segmentation based on subnets without strict enforcement (i.e. "magic segmentation") is prohibited.
+
+<CardGroup cols={2}>
+  <Card title="DMZ (Demilitarized Zone)" icon="globe">
+    **What it is:** A perimeter network that isolates external-facing services from the internal network. This is where services that need to be accessible from the internet are placed.
+    <br /><br />
+    **Examples:** Web servers (Apache, Nginx), email servers, FTP servers.
+  </Card>
+  <Card title="Local Office" icon="building">
+    **What it is:** The network for employee workstations, laptops, and other devices used for daily work.
+  </Card>
+  <Card title="Local Server" icon="server">
+    **What it is:** A secured network for internal servers and databases that should not be directly accessible from the internet.
+    <br /><br />
+    **Examples:** Database servers, application servers, internal file servers.
+  </Card>
+  <Card title="Guest Network" icon="wifi">
+    **What it is:** An isolated network for guests and personal devices that provides internet access but no access to internal company resources.
+  </Card>
+  <Card title="IoT Network" icon="microchip">
+    **What it is:** A dedicated, isolated network for all Internet of Things (IoT) devices. These devices should not be on the same network as servers or office workstations.
+  </Card>
+</CardGroup>
