@@ -10,22 +10,12 @@ This section defines how data must be classified and handled across CARA COM MY 
 The goal is to ensure that sensitive data is stored, transmitted, and accessed appropriately to reduce the risk of leaks or misuse.
 
 <CardGroup cols={2}>
-  <Card
-    title="Public"
-    icon="globe"
-    iconType="solid"
-    color="#000000"
-  >
-    **Description:** Freely shareable; no security risk if disclosed.  
+  <Card title="Public" icon="unlock" iconType="solid" color="#eeea13ff">
+    **Description:** Freely shareable; no security risk if disclosed.
     **Examples:** Marketing materials, public website content.
   </Card>
-  <Card
-    title="Internal"
-    icon="building"
-    iconType="solid"
-    color="#3b82f6"
-  >
-    **Description:** For internal use only; not for public release.  
+  <Card title="Internal" icon="building" iconType="solid" color="#3b82f6">
+    **Description:** For internal use only; not for public release.
     **Examples:** Project docs, sprint notes, internal announcements.
   </Card>
   <Card
@@ -34,16 +24,11 @@ The goal is to ensure that sensitive data is stored, transmitted, and accessed a
     iconType="solid"
     color="#f59e0b"
   >
-    **Description:** Sensitive business or customer data.  
-    **Examples:** Customer info, contracts, sales reports.
+    **Description:** Sensitive business or customer data. **Examples:** Customer
+    info, contracts, sales reports.
   </Card>
-  <Card
-    title="Restricted"
-    icon="lock"
-    iconType="solid"
-    color="#ef4444"
-  >
-    **Description:** Highest sensitivity; disclosure causes severe risk.  
+  <Card title="Restricted" icon="lock" iconType="solid" color="#ef4444">
+    **Description:** Highest sensitivity; disclosure causes severe risk.
     **Examples:** Credentials, financial records, PII.
   </Card>
 </CardGroup>
@@ -51,39 +36,46 @@ The goal is to ensure that sensitive data is stored, transmitted, and accessed a
 ## Applying Data Classification in Practice
 
 ### File Storage & Collaboration Tools
-- **Internal** → stored in company-managed collaboration tools (Confluence, SharePoint, Notion).  
-- **Confidential** → stored only in approved secure systems (e.g., GitLab private repos, internal databases, secure cloud buckets).  
+
+- **Internal** → stored in company-managed collaboration tools (Confluence, SharePoint, Notion).
+- **Confidential** → stored only in approved secure systems (e.g., GitLab private repos, internal databases, secure cloud buckets).
 - **Restricted** → must be stored in encrypted secret managers (e.g., Vault, AWS Secrets Manager).
 
 ### Version Control (GitLab)
-- **Internal** → code repos without sensitive data.  
-- **Confidential** → private repos containing business logic or customer-related code.  
+
+- **Internal** → code repos without sensitive data.
+- **Confidential** → private repos containing business logic or customer-related code.
 - **Restricted** → credentials, tokens, or secrets must **never** be committed to Git.
 
 ### Databases & Applications
-- Label sensitive tables/columns by classification.  
-- **Confidential** (e.g., user emails) may be accessible to project teams.  
+
+- Label sensitive tables/columns by classification.
+- **Confidential** (e.g., user emails) may be accessible to project teams.
 - **Restricted** (e.g., password hashes, private keys) only accessible by MIS/IT Security or designated admins.
 
 ### Data Transmission
-- **Internal** → normal email or chat tools are acceptable.  
-- **Confidential/Restricted** → must use secure, encrypted channels (TLS, HTTPS, PGP/S/MIME for email).  
+
+- **Internal** → normal email or chat tools are acceptable.
+- **Confidential/Restricted** → must use secure, encrypted channels (TLS, HTTPS, PGP/S/MIME for email).
 
 ### Backups & Logs
-- **Confidential/Restricted** → backups must be encrypted, with access limited.  
+
+- **Confidential/Restricted** → backups must be encrypted, with access limited.
 - Logs must mask Restricted fields (e.g., do not log raw passwords, tokens, or keys).
 
 ### Access Rights
-- **Public/Internal** → accessible to most employees.  
-- **Confidential** → limited to teams who need the information.  
-- **Restricted** → only MIS/IT Security or explicitly authorized administrators.  
+
+- **Public/Internal** → accessible to most employees.
+- **Confidential** → limited to teams who need the information.
+- **Restricted** → only MIS/IT Security or explicitly authorized administrators.
 
 ### Retention & Disposal
-- **Internal** → retain until no longer useful.  
-- **Confidential** → retain as per business or client contract requirements.  
+
+- **Internal** → retain until no longer useful.
+- **Confidential** → retain as per business or client contract requirements.
 - **Restricted** → securely delete immediately once no longer required.
 
 <Info>
-  Data classification is not optional.  
-  All employees are expected to apply the correct classification when creating, storing, or transmitting information.
+  Data classification is not optional. All employees are expected to apply the
+  correct classification when creating, storing, or transmitting information.
 </Info>
