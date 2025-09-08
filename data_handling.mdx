@@ -37,9 +37,18 @@ The goal is to ensure that sensitive data is stored, transmitted, and accessed a
 
 ### File Storage & Collaboration Tools
 
-- **Internal** → stored in company-managed collaboration tools (Confluence, SharePoint, Notion).
-- **Confidential** → stored only in approved secure systems (e.g., GitLab private repos, internal databases, secure cloud buckets).
-- **Restricted** → must be stored in encrypted secret managers (e.g., Vault, AWS Secrets Manager).
+This section applies to general document storage and collaboration.
+
+- **Google Drive:** The company's Google Drive is the primary tool for storing **Public**, **Internal**, **Confidential**, and **Restricted** files. The owner of the file is responsible for configuring the access control based on the classification level:
+    - **Public:** Files can be shared publicly ("anyone with the link").
+    - **Internal:** Files must be shared only with members of the organization.
+    - **Confidential:** Files must be shared only with specific individuals or groups within the organization.
+    - **Restricted:** Files must be shared only with explicitly authorized individuals. Link sharing must be disabled.
+- **ClickUp:** Used for task management. Documents related to tasks should be stored in Google Drive and linked from ClickUp.
+
+<Note>
+  **Exception for Internal Systems:** If an internal system (e.g., CARA HRMS) has its own secure storage for restricted files, it is not necessary to duplicate those files in Google Drive.
+</Note>
 
 ### Version Control (GitLab)
 
@@ -55,12 +64,22 @@ The goal is to ensure that sensitive data is stored, transmitted, and accessed a
 
 ### Data Transmission
 
-- **Internal** → normal email or chat tools are acceptable.
-- **Confidential/Restricted** → must use secure, encrypted channels (TLS, HTTPS, PGP/S/MIME for email).
+- **Internal Communication:** Normal email (e.g., Gmail) and approved chat tools are acceptable for transmitting **Internal** data.
+- **Secure Channels for Sensitive Data:** When transmitting **Confidential** or **Restricted** data, secure and encrypted channels must be used. This applies to:
+    - **Email:** Use PGP/S/MIME encryption for emails containing sensitive data.
+    - **API Calls:**
+        - **Public-facing APIs:** All public-facing API endpoints must enforce HTTPS.
+        - **Internal APIs:** Internal API calls between microservices can use HTTP, provided they are within a trusted network.
+    - **Other Transmissions:** Any other form of data transmission must use a secure protocol (e.g., SFTP).
+
+<Info>
+  If you are unsure which protocol to use for your specific use case, please contact the MIS team for guidance.
+</Info>
 
 ### Backups & Logs
 
 - **Confidential/Restricted** → backups must be encrypted, with access limited.
+- Use platform-level encryption where available (e.g., VMWare vSphere VM Encryption, or BitLocker for Hyper-V hosts) to protect backup files at rest.
 - Logs must mask Restricted fields (e.g., do not log raw passwords, tokens, or keys).
 
 ### Access Rights
@@ -75,7 +94,7 @@ The goal is to ensure that sensitive data is stored, transmitted, and accessed a
 - **Confidential** → retain as per business or client contract requirements.
 - **Restricted** → securely delete immediately once no longer required.
 
-<Info>
+<Warning>
   Data classification is not optional. All employees are expected to apply the
   correct classification when creating, storing, or transmitting information.
-</Info>
+</Warning>
