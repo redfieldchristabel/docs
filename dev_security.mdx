@@ -7,14 +7,31 @@ This policy defines the security requirements for the software development lifec
 Key principles include:
 
 - **Secure Coding Practices:**
-    - Developers must follow secure coding best practices to prevent common vulnerabilities (e.g., OWASP Top 10).
-    - Code must be reviewed for security vulnerabilities before being deployed to production.
+    - Developers must follow the secure coding best practices outlined in the [OWASP Top 10](https://owasp.org/www-project-top-ten/).
+    - Code must be reviewed for security vulnerabilities before being deployed to production. This includes:
+        - **Peer Review:** All code must be reviewed by at least one other developer.
+        - **Automated Scanning:** Code must be scanned with a static analysis security testing (SAST) tool.
 - **Dependency Management:**
     - All third-party dependencies must be scanned for known vulnerabilities.
     - A process must be in place to update dependencies with known vulnerabilities.
-- **Secrets Management:**
-    - All secrets (e.g., API keys, passwords) must be stored in a secure secrets management solution.
-    - Secrets must not be hardcoded in the source code.
+- **Secrets Management (GitLab Self-Hosted):**
+    - All secrets (e.g., database passwords, API keys) must be stored in a secure secrets management solution and must not be committed to the Git repository.
+    - Hardcoded secrets (e.g., passwords, API keys, tokens) in the source code are strictly prohibited.
+    - `.env` files containing secrets are strictly prohibited from the repository.
+    - Template environment files, such as `.env.example`, are permitted but must not contain actual secret values. Placeholders should be used instead.
+    - Files containing secrets, such as private keys or key pairs (e.g., `.key`, `.pem` files), are strictly prohibited from the repository.
+- **Repository Access Security:**
+    - Personal access tokens must not be used for cloning repositories, accessing the container registry, or reading packages.
+    - Read-only Deploy Tokens must be used instead.
+    - Deploy Tokens must be tightly scoped to the specific projects or groups required.
+- **Container Security:**
+    - Container images must be scanned for known vulnerabilities in both OS packages and application dependencies.
+    - Images must be built from minimal, trusted base images.
+    - Containers should not be run as the `root` user. If this is not achievable, an exception must be requested from the IT Security team.
+- **Branch Protection Rules:**
+    - Direct pushes to `main` and `master` branches are prohibited. All changes must be made through a merge request.
+    - Merge requests must require status checks (e.g., SAST scans) to pass before they can be merged.
 - **CI/CD Security:**
     - The CI/CD pipeline must be secured to prevent unauthorized access and code injection.
     - All code must be scanned for vulnerabilities as part of the CI/CD pipeline.
+    - **IT Security Approval Gate:** The pipeline must enforce an approval step from the IT Security team before any code is merged into the `main` or `master` branch.
