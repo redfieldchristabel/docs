@@ -17,7 +17,8 @@
       "data_handling",
       "access_control",
       "network_security",
-      "dev_security"
+      "dev_security",
+      "incident_response"
     ]
   },
   "logo": {
