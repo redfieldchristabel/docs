@@ -16,7 +16,8 @@
       "acceptable_use",
       "data_handling",
       "access_control",
-      "network_security"
+      "network_security",
+      "dev_security"
     ]
   },
   "logo": {

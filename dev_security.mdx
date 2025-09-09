@@ -1,0 +1,20 @@
+---
+title: 'Development Security'
+sidebarTitle: 'Development Security'
+---
+
+This policy defines the security requirements for the software development lifecycle.
+Key principles include:
+
+- **Secure Coding Practices:**
+    - Developers must follow secure coding best practices to prevent common vulnerabilities (e.g., OWASP Top 10).
+    - Code must be reviewed for security vulnerabilities before being deployed to production.
+- **Dependency Management:**
+    - All third-party dependencies must be scanned for known vulnerabilities.
+    - A process must be in place to update dependencies with known vulnerabilities.
+- **Secrets Management:**
+    - All secrets (e.g., API keys, passwords) must be stored in a secure secrets management solution.
+    - Secrets must not be hardcoded in the source code.
+- **CI/CD Security:**
+    - The CI/CD pipeline must be secured to prevent unauthorized access and code injection.
+    - All code must be scanned for vulnerabilities as part of the CI/CD pipeline.
