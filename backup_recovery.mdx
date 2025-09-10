@@ -1,0 +1,51 @@
+---
+title: 'Backup and Recovery'
+description: 'This policy defines the requirements for data backup and recovery to ensure data availability and business continuity.'
+sidebarTitle: 'Backup & Recovery'
+---
+
+## Introduction
+
+This policy outlines the requirements for data backup and recovery to ensure data availability and business continuity in the event of data loss or system failure.
+
+<Note>
+  This policy applies to all critical systems and data that support business operations.
+</Note>
+
+## Scope
+
+This policy covers all production systems and data, including databases, application servers, and critical infrastructure components. Specific inclusions and exclusions will be documented in the system-specific backup procedures.
+
+## Backup Strategy
+
+### Frequency
+- **Application-level backups:** Backups for critical applications and databases (e.g., MySQL) must be performed on a daily basis.
+- **VM-level backups:** Full virtual machine snapshots should be taken weekly for disaster recovery purposes.
+
+### Type
+- The primary backup method will be application-level (logical) backups to allow for faster, more granular restores and to minimize storage space.
+
+### Location
+- All backups must be stored in a geographically separate location from the production systems. Backups must not be stored on the same physical or virtual instance as the application.
+
+### Retention
+- Daily application-level backups must be retained for a minimum of 7 days.
+- Weekly VM-level backups must be retained for at least 4 weeks.
+
+## Recovery Procedures
+
+### RTO and RPO
+- **Recovery Time Objective (RTO):** The target time to restore a service after an incident is 4 hours.
+- **Recovery Point Objective (RPO):** The maximum acceptable data loss is 24 hours.
+
+### Process
+Detailed, step-by-step procedures for restoring services and data from backups will be maintained for each critical system.
+
+### Testing
+- The recovery process for each critical system must be tested at least once per month to ensure the integrity of backups and the effectiveness of the recovery plan.
+
+## Roles and Responsibilities
+
+- **System Owners:** Responsible for ensuring their systems are being backed up in accordance with this policy.
+- **IT Operations Team:** Responsible for the day-to-day management of the backup systems, including monitoring, troubleshooting, and performing restores.
+- **IT Security Team:** Responsible for auditing compliance with this policy and verifying the security of backup data.

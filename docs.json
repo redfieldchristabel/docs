@@ -18,7 +18,9 @@
       "access_control",
       "network_security",
       "dev_security",
-      "incident_response"
+      "incident_response",
+      "backup_recovery",
+      "compliance"
     ]
   },
   "logo": {
